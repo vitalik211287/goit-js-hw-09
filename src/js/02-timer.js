@@ -1,14 +1,14 @@
-// import 'flatpickr/dist/flatpickr.min.css';
-// import flatpickr from 'flatpickr';
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
+
+let timeInMs = Date.now();
 
 flatpickr('#datetime-picker', {
   enableTime: true,
   time_24hr: true,
-  defaultDate: new Date(),
+  defaultDate: timeInMs,
   minuteIncrement: 1,
-  onClose(selectedDates) {
-    console.log(selectedDates[0]);
-  },
+  onClose: onCloseCallback,
 });
 
 const refs = {
@@ -20,39 +20,36 @@ const refs = {
   divSeconds: document.querySelector('span[data-seconds]'),
 };
 
- refs.inputClick.addEventListener('input', () => {
-    const startTime = new Date(refs.inputClick.value).getTime();
-    console.log(startTime);
-    if (startTime < Date.now()) {
-      refs.startButton.setAttribute('disabled', '');
-      return alert('Please choose a date in the future');
-    } else {
-      refs.startButton.removeAttribute('disabled');
-   
+disableStartButton();
+
+refs.startButton.addEventListener('click', () => {
+  refs.inputClick.setAttribute('disabled', '');
+  disableStartButton();
+  const intervalId = setInterval(() => {
+    if (timeInMs > Date.now()) {
+      const timeObj = convertMs(timeInMs - Date.now());
+      return updateTimer(timeObj);
     }
+    clearInterval(intervalId);
+  }, 1000);
 });
 
-function pad(value) {
-    return String(value).padStart(2, '0');
+function disableStartButton() {
+  refs.startButton.setAttribute('disabled', '');
 }
 
-refs.startButton.addEventListener('click', ()=>{
-  const startTime = new Date(refs.inputClick.value).getTime();
-  refs.inputClick.setAttribute('disabled', '')
-        refs.startButton.setAttribute('disabled', '')
-  const intervalId = setInterval(() => {
-    if (startTime > Date.now()) {
-      const {days, hours, minutes, seconds} = convertMs(startTime - Date.now());
-        console.log(`${days}:${hours}:${minutes}:${seconds}`);
-        return updateTimer(days, hours, minutes, seconds);
- 
-  } else {
-    clearInterval(intervalId);
+function onCloseCallback([selectedTime]) {
+  if (selectedTime < Date.now()) {
+    disableStartButton();
+    return alert('Please choose a date in the future');
   }
-}, 1000)
-});
+  timeInMs = selectedTime;
+  refs.startButton.removeAttribute('disabled');
+}
 
-
+function pad(value) {
+  return String(value).padStart(2, '0');
+}
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
@@ -73,22 +70,9 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-function updateTimer(days, hours, minutes, seconds) {
-  refs.divDays.textContent =`${days}`,
-  refs.divHours.textContent = `${hours}`,
-  refs.divMinutes.textContent = `${minutes}`,
-  refs.divSeconds.textContent =  `${seconds}`
-  }
-
-
- 
- 
-
-
-
-
-
-
-
-
-
+function updateTimer({ days, hours, minutes, seconds }) {
+  refs.divDays.textContent = `${days}`;
+  refs.divHours.textContent = `${hours}`;
+  refs.divMinutes.textContent = `${minutes}`;
+  refs.divSeconds.textContent = `${seconds}`;
+}
