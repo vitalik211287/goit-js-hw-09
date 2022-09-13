@@ -1,0 +1,2 @@
+const e={delayEl:document.querySelector("input[name=delay]"),stepEl:document.querySelector("input[name=step]"),amountEl:document.querySelector("input[name=amount]"),submitEl:document.querySelector("button[type=submit]")};const t=e.delayEl.value+e.stepEl.value;e.submitEl.addEventListener("click",(()=>{let l=0;function u(){l+=1,console.log(l)}for(let l=0;l<e.amountEl.value;l++)setTimeout(u,t*(l+1))}));
+//# sourceMappingURL=03-promises.7e308509.js.map
