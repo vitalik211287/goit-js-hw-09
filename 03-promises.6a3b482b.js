@@ -1,2 +1,0 @@
-!function(){var e={delayEl:document.querySelector("input[name=delay]"),stepEl:document.querySelector("input[name=step]"),amountEl:document.querySelector("input[name=amount]"),submitEl:document.querySelector("button[type=submit]")},t=e.delayEl.value+e.stepEl.value;e.submitEl.addEventListener("click",(function(){var u=0;function n(){u+=1,console.log(u)}for(var l=0;l<e.amountEl.value;l++)setTimeout(n,t*(l+1))}))}();
-//# sourceMappingURL=03-promises.6a3b482b.js.map

@@ -1,0 +1,2 @@
+const e={delayEl:document.querySelector('input[name="delay"]'),stepEl:document.querySelector('input[name="step"]'),amountEl:document.querySelector('input[name="amount"]'),formEl:document.querySelector(".form")};e.formEl.addEventListener("submit",(t=>{t.preventDefault();let l=Number(e.delayEl.value);const u=Number(e.stepEl.value),o=Number(e.amountEl.value);for(let e=1;e<=o;e+=1)setTimeout((()=>{console.log(e)}),l),l+=u}));
+//# sourceMappingURL=03-promises.db5f80fc.js.map
