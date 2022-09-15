@@ -1,7 +1,4 @@
 const refs = {
-  delayEl: document.querySelector('input[name="daley"]'),
-  stepEl: document.querySelector('input[name="step"]'),
-  amountEl: document.querySelector('input[name="amount"]'),
   formEl: document.querySelector('.form'),
 };
 
