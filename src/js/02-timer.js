@@ -1,6 +1,6 @@
 // const flatpickr = require('flatpickr');
-import 'flatpickr/dist/flatpickr.min.css';
-import flatpickr from 'flatpickr';
+// import 'flatpickr/dist/flatpickr.min.css';
+// import flatpickr from 'flatpickr';
 
 
 
@@ -51,25 +51,36 @@ const refs = {
       //   const timer = {
       // start() {
       // convertMs();
-      intervalId = setInterval(() => {
-          if (startTime > Date.now()) {
-            const {days, hours, minutes, seconds} = convertMs(startTime - Date.now());
-              console.log(`${days}:${hours}:${minutes}:${seconds}`);
-              updateTimer({ days, hours, minutes, seconds });
-        } else {
-          clearInterval(intervalId);
-        }
-      }, 1000)
+      
       // },
       //   };
       //   timer.start();
     }
 });
-// const x = refs.startButton.addEventListener('click', y);
+// 
 // console.log(x);
 function pad(value) {
     return String(value).padStart(2, '0');
 }
+
+refs.startButton.addEventListener('click', ()=>{
+  const startTime = new Date(refs.inputClick.value).getTime();
+  refs.inputClick.setAttribute('disabled', '')
+        refs.startButton.setAttribute('disabled', '')
+  const intervalId = setInterval(() => {
+    if (startTime > Date.now()) {
+      const {days, hours, minutes, seconds} = convertMs(startTime - Date.now());
+        console.log(`${days}:${hours}:${minutes}:${seconds}`);
+        updateTimer({ days, hours, minutes, seconds });
+        
+  } else {
+    clearInterval(intervalId);
+  }
+}, 1000)
+}
+);
+
+
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
