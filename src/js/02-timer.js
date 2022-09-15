@@ -71,8 +71,8 @@ refs.startButton.addEventListener('click', ()=>{
     if (startTime > Date.now()) {
       const {days, hours, minutes, seconds} = convertMs(startTime - Date.now());
         console.log(`${days}:${hours}:${minutes}:${seconds}`);
-        updateTimer({ days, hours, minutes, seconds });
-        
+        return updateTimer(days, hours, minutes, seconds);
+              
   } else {
     clearInterval(intervalId);
   }
