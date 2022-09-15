@@ -1,46 +1,49 @@
 const refs = {
-  delayEl: document.querySelector('input[name="delay"]'),
+  delayEl: document.querySelector('input[name="daley"]'),
   stepEl: document.querySelector('input[name="step"]'),
   amountEl: document.querySelector('input[name="amount"]'),
   formEl: document.querySelector('.form'),
 };
 
-refs.formEl.addEventListener('submit', e => {
-  e.preventDefault();
-
-  let delay = Number(refs.delayEl.value);
-  const inputStepValue = Number(refs.stepEl.value);
-  const amountValue = Number(refs.amountEl.value);
-
-  for (let position = 1; position <= amountValue; position += 1) {
-    setTimeout(() => {
-      createPromise(position, delay)
-        .then(succes => {
-          succes;
-        })
-        .catch(error => {
-          error;
-        });
-    }, delay);
-
-    delay += inputStepValue;
-  }
-});
-
-const createPromise = (position, delay) => {
+const createPromise = (position, daley) => {
   return new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
     if (shouldResolve) {
-      resolve(onSuccess(position, delay));
+      resolve();
     } else {
-      reject(onErrore(position, delay));
+      reject();
     }
   });
 };
 
-function onSuccess(position, delay) {
-  return console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+refs.formEl.addEventListener('submit', e => {
+  e.preventDefault();
+  let {
+    elements: { delay, step, amount },
+  } = refs.formEl;
+
+  let daley = Number(delay.value);
+  const inputStepValue = Number(step.value);
+  const amountValue = Number(amount.value);
+
+  for (let position = 1; position <= amountValue; position += 1) {
+    setTimeout(() => {
+      createPromise(position, daley)
+        .then(() => {
+          onSuccess(position, daley);
+        })
+        .catch(() => {
+          onErrore(position, daley);
+        });
+    }, daley);
+
+    daley += inputStepValue;
+  }
+});
+
+function onSuccess(position, daley) {
+  return console.log(`✅ Fulfilled promise ${position} in ${daley}ms`);
 }
-function onErrore(position, delay) {
-  return console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+function onErrore(position, daley) {
+  return console.log(`❌ Rejected promise ${position} in ${daley}ms`);
 }
