@@ -1,5 +1,5 @@
-// import 'flatpickr/dist/flatpickr.min.css';
-// import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
+import flatpickr from 'flatpickr';
 
 flatpickr('#datetime-picker', {
   enableTime: true,

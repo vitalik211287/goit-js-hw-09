@@ -15,8 +15,12 @@ refs.formEl.addEventListener('submit', e => {
   for (let position = 1; position <= amountValue; position += 1) {
     setTimeout(() => {
       createPromise(position, delay)
-        .then(succses=>{succses})
-        .catch(error=>{error});
+        .then(succes => {
+          succes;
+        })
+        .catch(error => {
+          error;
+        });
     }, delay);
 
     delay += inputStepValue;
@@ -34,10 +38,9 @@ const createPromise = (position, delay) => {
   });
 };
 
-
 function onSuccess(position, delay) {
   return console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
 }
 function onErrore(position, delay) {
- return console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+  return console.log(`❌ Rejected promise ${position} in ${delay}ms`);
 }
