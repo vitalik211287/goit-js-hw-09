@@ -33,8 +33,7 @@ refs.formEl.addEventListener('submit', e => {
         .catch(() => {
           onErrore(position, totalDelay);
         });
-    }, delay);
-    totalDelay;
+    }, delay)
   }
 });
 
