@@ -14,8 +14,9 @@ const createPromise = (position, _delay) => {
 };
 
 refs.formEl.addEventListener('submit', e => {
-    e.preventDefault();
-   const { elements: { delay: _delay, step, amount },
+  e.preventDefault();
+  const {
+    elements: { delay: _delay, step, amount },
   } = refs.formEl;
 
   let delay = Number(_delay.value);
@@ -23,17 +24,17 @@ refs.formEl.addEventListener('submit', e => {
   const amountValue = Number(amount.value);
 
   for (let position = 1; position <= amountValue; position += 1) {
+    const totalDelay = (delay += inputStepValue);
     setTimeout(() => {
       createPromise(position, delay)
         .then(() => {
-          onSuccess(position, delay);
+          onSuccess(position, totalDelay);
         })
         .catch(() => {
-          onErrore(position, delay);
+          onErrore(position, totalDelay);
         });
     }, delay);
-
-    delay += inputStepValue;
+    totalDelay;
   }
 });
 
