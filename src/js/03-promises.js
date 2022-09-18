@@ -1,45 +1,47 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
 const refs = {
   formEl: document.querySelector('.form'),
 };
 
-const createPromise = (position, _delay) => {
+function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
-    const shouldResolve = Math.random() > 0.3;
-    if (shouldResolve) {
-      resolve();
-    } else {
-      reject();
-    }
+    setTimeout(() => {
+      const shouldResolve = Math.random() > 0.3;
+      if (shouldResolve) {
+        resolve({ position, delay });
+      } else {
+        reject({ position, delay });
+      }
+    }, delay);
   });
-};
+}
 
-refs.formEl.addEventListener('submit', e => {
+function submitHandler(e) {
   e.preventDefault();
+
   const {
     elements: { delay: _delay, step, amount },
-  } = refs.formEl;
+  } = e.target;
 
   let delay = Number(_delay.value);
   const inputStepValue = Number(step.value);
   const amountValue = Number(amount.value);
 
   for (let position = 1; position <= amountValue; position += 1) {
-    const totalDelay = (delay += inputStepValue);
-    setTimeout(() => {
-      createPromise(position, delay)
-        .then(() => {
-          onSuccess(position, totalDelay);
-        })
-        .catch(() => {
-          onErrore(position, totalDelay);
-        });
-    }, delay)
-  }
-});
+    createPromise(position, delay).then(onSuccess).catch(onErrore);
 
-function onSuccess(position, delay) {
-  return console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+    delay += inputStepValue;
+    e.target.reset();
+  }
 }
-function onErrore(position, delay) {
-  return console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+
+function onSuccess({ position, delay }) {
+  return Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
 }
+
+function onErrore({ position, delay }) {
+  return Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+}
+
+refs.formEl.addEventListener('submit', submitHandler);
