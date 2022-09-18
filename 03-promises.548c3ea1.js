@@ -1,2 +1,0 @@
-const e={formEl:document.querySelector(".form")};function t(e,t){return console.log(`✅ Fulfilled promise ${e} in ${t}ms`)}function o(e,t){return console.log(`❌ Rejected promise ${e} in ${t}ms`)}e.formEl.addEventListener("submit",(n=>{n.preventDefault();const{elements:{delay:r,step:l,amount:m}}=e.formEl;let u=Number(r.value);const s=Number(l.value),c=Number(m.value);for(let e=1;e<=c;e+=1){const n=u+=s;setTimeout((()=>{new Promise(((e,t)=>{Math.random()>.3?e():t()})).then((()=>{t(e,n)})).catch((()=>{o(e,n)}))}),u)}}));
-//# sourceMappingURL=03-promises.548c3ea1.js.map
